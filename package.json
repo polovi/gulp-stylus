@@ -1,0 +1,21 @@
+{
+  "name": "gulp-stylus",
+  "version": "0.0.1",
+  "description": "Stylus for gulp.",
+  "license": "MIT",
+  "author":"Tomas Polovincak <polovincak.tomas@gmail.com>",
+  "repository": "https://github.com/polovi/gulp-stylus.git",
+  "keywords":[
+    "gulpplugin",
+    "css",
+    "stylus"
+  ],
+  "dependencies": {
+    "stylus": "~0.42.2",
+    "bufferstreams": "0.0.1",
+    "gulp-util": "~2.2.14"
+  },
+  "main":"index.js",
+  "devDependencies": {
+  }
+}

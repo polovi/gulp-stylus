@@ -9,21 +9,22 @@ var stylus          = require('stylus'),
 
     PLUGIN_NAME     = 'gulp-stylus';
 
+function formatException(e) {
+  return e.name+' in plugin \''+gutil.colors.cyan(PLUGIN_NAME)+'\''+': '+e.message
+}
 
 function gulpstylus(options) {
   var stream = new Transform({ objectMode: true }),
-      opts = defaults(options, {
+      opts = defaults({}, options ,{
         compress: false,
         silent: false
       });
 
   stream._transform = function(file, unused, done) {
 
-    // Pass through if null
     if (file.isNull()) {
       stream.push(file);
-      done();
-      return;
+      return done();
     }
 
     if (file.isStream()) {
@@ -35,20 +36,22 @@ function gulpstylus(options) {
               .set('compress', opts.compress);
 
     try {
-      s.render(function(err, css) {
-        if (err) throw err;
+      var css = s.render();
+      file.path = gutil.replaceExtension(file.path, '.css');
+      file.contents = new Buffer(css);
+      stream.push(file);
+      done();
 
-        file.path = gutil.replaceExtension(file.path, '.css');
-        file.contents = new Buffer(css);
-        stream.push(file);
-        done();
-      });
-    } catch(err) {
+    } catch (e) {
       if (opts.silent) {
-        log(String(new PluginError(PLUGIN_NAME, err)));
+        log(formatException(e));
+        file.path = gutil.replaceExtension(file.path, '.css');
+        file.contents = new Buffer('');
+        stream.push(file);
         return done();
       }
-      done(new PluginError(PLUGIN_NAME, err));
+
+      done(new PluginError(PLUGIN_NAME, e));
     }
 
   };

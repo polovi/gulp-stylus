@@ -31,9 +31,14 @@ function gulpstylus(options) {
       return done(new PluginError(PLUGIN_NAME, 'Streaming not supported'));
     }
 
-    var s = stylus(file.contents.toString('utf8'))
-              .set('filename', file.path)
-              .set('compress', opts.compress);
+    var s = stylus(file.contents.toString('utf8')).set('filename', file.path);
+
+    if (opts.set) {
+      var key, _ref = opts.set;
+      for (key in _ref) {
+        s.set(key, _ref[key]);
+      }
+    }
 
     try {
       var css = s.render();

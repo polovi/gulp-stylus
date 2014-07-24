@@ -1,7 +1,7 @@
 {
   "name": "gulp-stylus",
-  "version": "0.0.1",
-  "description": "Stylus for gulp.",
+  "version": "0.0.2",
+  "description": "Stylus for gulp",
   "license": "MIT",
   "author": "Tomas Polovincak <polovincak.tomas@gmail.com>",
   "repository": "https://github.com/polovi/gulp-stylus.git",
